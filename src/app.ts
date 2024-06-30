@@ -1,10 +1,10 @@
-import express, { Request, Response } from "express";
+import express, { Response, Request } from "express";
 
 import axios from "axios";
 
 import responseTime from "response-time";
 
-import startMetricsServer, { restResponseTimeHistogram } from "./metrics";
+import startMetricsServer, { apiHistogram } from "./metrics";
 
 const app = express();
 
@@ -13,11 +13,11 @@ const endpoint = "https://jsonplaceholder.typicode.com";
 app.use(
   responseTime((req: Request, res: Response, time: number) => {
     if (req?.route?.path) {
-      restResponseTimeHistogram.observe(
+      apiHistogram.observe(
         {
           method: req.method,
           route: req.route.path,
-          status_code: res.statusCode,
+          statusCode: res.statusCode,
         },
         time * 1000
       );

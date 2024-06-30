@@ -6,13 +6,13 @@ const collectDefaultMetrics = client.collectDefaultMetrics;
 
 collectDefaultMetrics();
 
-const app = express();
-
-export const restResponseTimeHistogram = new client.Histogram({
-  name: "rest_response_time_duration_seconds",
-  help: "Rest Response Time duration in seconds",
-  labelNames: ["method", "route", "status_code"],
+export const apiHistogram = new client.Histogram({
+  help: "rest API time count",
+  name: "rest_api_time_count",
+  labelNames: ["method", "route", "statusCode"],
 });
+
+const app = express();
 
 const startMetricsServer = () => {
   app.get("/metrics", async (_, res) => {
