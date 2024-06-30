@@ -2,6 +2,8 @@ import express from "express";
 
 import axios from "axios";
 
+import startMetricsServer from "./metrics";
+
 const app = express();
 
 const endpoint = "https://jsonplaceholder.typicode.com";
@@ -22,3 +24,5 @@ app.get("/posts/:id", async (req, res) => {
 });
 
 app.listen(6000);
+
+startMetricsServer();
